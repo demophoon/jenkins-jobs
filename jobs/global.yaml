@@ -1,0 +1,9 @@
+- defaults:
+    name: global
+    description: 'Do not edit this job through the web!'
+    disabled: false
+    logrotate:
+        daysToKeep: -1
+        numToKeep: 30
+        artifactDaysToKeep: -1
+        artifactNumToKeep: 30
