@@ -3,15 +3,9 @@
     project-type: 'freestyle'
     defaults: 'global'
     description: 'Show off custom vagrant builders'
-    disabled: false
     display-name: 'Vagrant Test'
     concurrent: true
     quiet-period: 30
-    logrotate:
-        daysToKeep: -1
-        numToKeep: 30
-        artifactDaysToKeep: -1
-        artifactNumToKeep: 30
     builders:
         - vagrant_up:
             vagrantFile: /tmp/jenkins/vagrant/Vagrantfile

@@ -14,16 +14,9 @@
     name: publish-blog
     project-type: freestyle
     defaults: global
-    description: 'Do not edit this job through the web!'
-    disabled: false
     display-name: 'Publish Blog'
     concurrent: true
     quiet-period: 30
-    logrotate:
-        daysToKeep: -1
-        numToKeep: 30
-        artifactDaysToKeep: -1
-        artifactNumToKeep: 30
     scm:
         - demophoon.github.io
     builders:
@@ -36,9 +29,10 @@
 
             python setup.py develop
             pelican content -o output -s publishconf.py
-            ghp-import output
+            ghp-import -b master output
             git checkout master
-            git merge gh-pages -m "Built by Jenkins ${JOB_NAME} #${BUILD_NUMBER}"
+            rm -rf ./output
+            #git merge -a -m "Built by Jenkins ${JOB_NAME} #${BUILD_NUMBER}"
     publishers:
         - git_publisher:
             pushMerge: true

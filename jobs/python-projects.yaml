@@ -3,15 +3,9 @@
     project-type: 'freestyle'
     defaults: 'global'
     description: 'PEP-8 Check Python Code'
-    disabled: false
     display-name: '{name} PEP-8 Check'
     concurrent: true
     quiet-period: 30
-    logrotate:
-        daysToKeep: -1
-        numToKeep: 30
-        artifactDaysToKeep: -1
-        artifactNumToKeep: 30
     triggers:
         - github
         - github-pull-request:
