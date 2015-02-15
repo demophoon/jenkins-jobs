@@ -35,7 +35,7 @@
             which pip
 
             python setup.py develop
-            pelican content -o output -s pelicanconf.py
+            pelican content -o output -s publishconf.py
             ghp-import output
             git checkout master
             git merge gh-pages -m "Built by Jenkins ${JOB_NAME} #${BUILD_NUMBER}"
@@ -45,3 +45,14 @@
             pushOnlyIfSuccess: true
             branch: 'master'
             remote: 'origin'
+        - ircbot:
+            strategy: all
+            notify-start: false
+            notify-committers: false
+            notify-culprits: false
+            notify-upstream: false
+            notify-fixers: false
+            message-type: 'summary'
+            channels:
+                - name: '##brittslittlesliceofheaven'
+                  notify-only: false

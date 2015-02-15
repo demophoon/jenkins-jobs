@@ -1,0 +1,86 @@
+- job-template:
+    name: '{name}-PEP-8'
+    project-type: 'freestyle'
+    defaults: 'global'
+    description: 'PEP-8 Check Python Code'
+    disabled: false
+    display-name: '{name} PEP-8 Check'
+    concurrent: true
+    quiet-period: 30
+    logrotate:
+        daysToKeep: -1
+        numToKeep: 30
+        artifactDaysToKeep: -1
+        artifactNumToKeep: 30
+    triggers:
+        - github
+        - github-pull-request:
+            white-list:
+                - demophoon
+    scm:
+        - git:
+            url: '{git_repo}'
+            branches:
+                - 'origin/master'
+            local-branch: 'master'
+            credentials-id: !include github-creds.txt
+            git-config-name: 'Jenkins (Britt Gresham)'
+            git-config-email: 'jenkins@brittg.com'
+    properties:
+        - github_project_url:
+            projectUrl: '{git_url}'
+    builders:
+        - github_pending_status:
+        - shell: |
+            virtualenv pep8
+            . ./pep8/bin/activate
+
+            pip install pep8
+            pep8 --show-source --filename="*.py" --exclude="./pep8/*" ./
+
+- job-group:
+    name: '{name}-tests'
+    jobs:
+        - '{name}-PEP-8'
+
+- project:
+    name: 'Webvim'
+    git_repo: 'git@github.com:demophoon/webvim.git'
+    git_url: 'https://github.com/demophoon/webvim'
+    jobs:
+        - '{name}-tests'
+
+- project:
+    name: 'Brittbot'
+    git_repo: 'git@github.com:demophoon/brittbot.git'
+    git_url: 'https://github.com/demophoon/webvim'
+    jobs:
+        - '{name}-tests'
+
+- project:
+    name: 'FOSS Sams'
+    git_repo: 'git@github.com:demophoon/sams.git'
+    git_url: 'https://github.com/demophoon/webvim'
+    jobs:
+        - '{name}-tests'
+
+- project:
+    name: 'Cards of Lunacy'
+    git_repo: 'git@github.com:demophoon/cards-of-lunacy.git'
+    git_url: 'https://github.com/demophoon/webvim'
+    jobs:
+        - '{name}-tests'
+
+- project:
+    name: 'PingdomLib'
+    git_repo: 'git@github.com:demophoon/PingdomLib.git'
+    git_url: 'https://github.com/demophoon/webvim'
+    jobs:
+        - '{name}-tests'
+
+- project:
+    name: 'Vundle Headless Installer'
+    git_repo: 'git@github.com:demophoon/vundle-headless-installer.git'
+    git_url: 'https://github.com/demophoon/webvim'
+    jobs:
+        - '{name}-tests'

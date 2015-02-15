@@ -33,7 +33,6 @@ def git_publisher(parser, xml_parent, data):
         if isinstance(value, bool):
             value = str(value).lower()
         option = XML.SubElement(obj, '%s' % str(opt))
-        option.text = value
         if isinstance(value, basestring):
             option.text = value
 

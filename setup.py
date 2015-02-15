@@ -12,11 +12,21 @@ setup(
         "jenkins-job-builder",
     ],
     entry_points={
+        'jenkins_jobs.properties': [
+            'github_project_url=modules.github:project_url',
+        ],
+        'jenkins_jobs.builders': [
+            'vagrant_provision=modules.vagrant_builder:provision',
+            'vagrant_up=modules.vagrant_builder:up',
+            'vagrant_command=modules.vagrant_builder:command',
+            'vagrant_destroy=modules.vagrant_builder:destroy',
+            'github_pending_status=modules.github:pending',
+        ],
         'jenkins_jobs.wrappers': [
-            'pyenv=modules.pyenv:pyenv',
+            'pyenv=modules.pyenv_wrapper:pyenv',
         ],
         'jenkins_jobs.publishers': [
             'git_publisher=modules.git_publisher:git_publisher',
-        ]
+        ],
     }
 )
