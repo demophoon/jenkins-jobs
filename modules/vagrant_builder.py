@@ -40,8 +40,8 @@ def generate_xml(xml_parent, defaults, overrides=None, stringify_bool=True):
 def generate_vagrant_wrapper(xml_parent, data):
     wrapper = XML.SubElement(xml_parent, 'wrapper')
     options = {
-        'vagrantFile': data['vagrant-file'],
-        'vagrantVm': data.get('vagrant-vm', ''),
+        'vagrantFile': data['vagrantFile'],
+        'vagrantVm': data.get('vagrantVm', ''),
         'validated': str(data.get('validated', False)).lower(),
     }
     generate_xml(wrapper, options)
