@@ -24,6 +24,7 @@ setup(
         ],
         'jenkins_jobs.wrappers': [
             'pyenv=modules.pyenv_wrapper:pyenv',
+            'build_user_vars=modules.uservars:build_user_vars',
         ],
         'jenkins_jobs.publishers': [
             'git_publisher=modules.git_publisher:git_publisher',

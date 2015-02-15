@@ -1,15 +1,3 @@
-- scm:
-    name: demophoon.github.io
-    scm:
-        - git:
-            url: 'git@github.com:demophoon/demophoon.github.io.git'
-            branches:
-                - 'origin/staging'
-            local-branch: 'staging'
-            credentials-id: !include github-creds.txt
-            git-config-name: 'Jenkins (Britt Gresham)'
-            git-config-email: 'jenkins@brittg.com'
-
 - job:
     name: publish-blog
     project-type: freestyle
@@ -17,8 +5,22 @@
     display-name: 'Publish Blog'
     concurrent: true
     quiet-period: 30
+    triggers:
+        - github
+    properties:
+        - github_project_url:
+            projectUrl: 'https://github.com/demophoon/demophoon.github.io'
     scm:
-        - demophoon.github.io
+        - git:
+            url: 'git@github.com:demophoon/demophoon.github.io.git'
+            branches:
+                - 'origin/staging'
+            local-branch: 'staging'
+            credentials-id: !include github-creds.txt
+            git-config-name: 'Jenkins ($BUILD_USER)'
+            git-config-email: 'jenkins@brittg.com'
+    wrappers:
+        - build_user_vars:
     builders:
         - shell: |
             virtualenv publish-blog
@@ -32,7 +34,7 @@
             ghp-import -b master output
             git checkout master
             rm -rf ./output
-            #git merge -a -m "Built by Jenkins ${JOB_NAME} #${BUILD_NUMBER}"
+            git commit --amend --allow-empty --author "Jenkins ($BUILD_USER) <jenkins@brittg.com>" -m "Built by Jenkins ${JOB_NAME} #${BUILD_NUMBER}"
     publishers:
         - git_publisher:
             pushMerge: true
