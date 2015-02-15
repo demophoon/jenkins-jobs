@@ -14,6 +14,9 @@ setup(
     entry_points={
         'jenkins_jobs.wrappers': [
             'pyenv=modules.pyenv:pyenv',
+        ],
+        'jenkins_jobs.publishers': [
+            'git_publisher=modules.git_publisher:git_publisher',
         ]
     }
 )

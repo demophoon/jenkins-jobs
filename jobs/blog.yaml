@@ -24,13 +24,24 @@
         numToKeep: 30
         artifactDaysToKeep: -1
         artifactNumToKeep: 30
-    wrappers:
-        - pyenv:
-            version: '2.7.8'
     scm:
         - demophoon.github.io
     builders:
         - shell: |
-                  echo "Hello world"
-                  ls -la ./
-                  which python
+            virtualenv publish-blog
+            . ./publish-blog/bin/activate
+
+            which python
+            which pip
+
+            python setup.py develop
+            pelican content -o output -s pelicanconf.py
+            ghp-import output
+            git checkout master
+            git merge gh-pages -m "Built by Jenkins ${JOB_NAME} #${BUILD_NUMBER}"
+    publishers:
+        - git_publisher:
+            pushMerge: true
+            pushOnlyIfSuccess: true
+            branch: 'master'
+            remote: 'origin'
