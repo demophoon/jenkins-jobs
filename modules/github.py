@@ -46,6 +46,18 @@ def pending(parser, xml_parent, data):
         'com.cloudbees.jenkins.GitHubSetCommitStatusBuilder'
     )
 
+def failure(parser, xml_parent, data):
+    """yaml: github_status_on_failure
+    Publisher
+    """
+    opt = setup_base(
+        xml_parent,
+        'com.cloudbees.jenkins.GitHubCommitNotifier'
+    )
+    generate_xml(opt, {
+        'resultOnFailure': 'FAILURE',
+    }, data)
+
 
 def project_url(parser, xml_parent, data):
     """yaml: github_project_url

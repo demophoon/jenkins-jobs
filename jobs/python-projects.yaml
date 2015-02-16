@@ -1,9 +1,9 @@
 - job-template:
-    name: '{name}-PEP-8'
+    name: '{name}-Flake8'
     project-type: 'freestyle'
     defaults: 'global'
-    description: 'PEP-8 Check Python Code'
-    display-name: '{name} PEP-8 Check'
+    description: 'Flake8 Check Python Code'
+    display-name: '{name} Flake8 Check'
     concurrent: true
     quiet-period: 30
     triggers:
@@ -26,16 +26,26 @@
     builders:
         - github_pending_status:
         - shell: |
-            virtualenv pep8
-            . ./pep8/bin/activate
+            rm -rf ./flake8
+            virtualenv flake8
+            . ./flake8/bin/activate
 
-            pip install pep8
-            pep8 --show-source --filename="*.py" --exclude="./pep8/*" ./
+            which python
+            which pip
+
+            if [ -e "./setup.py" ]
+            then
+                python setup.py develop
+            fi
+            pip install flake8
+            flake8 --ignore=E501 --exclude=flake8/* --max-line-length=140 --max-complexity=15 ./
+    publishers:
+        - github_status_on_failure:
 
 - job-group:
     name: '{name}-tests'
     jobs:
-        - '{name}-PEP-8'
+        - '{name}-Flake8'
 
 - project:
     name: 'Webvim'

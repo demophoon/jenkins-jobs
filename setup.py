@@ -28,6 +28,7 @@ setup(
         ],
         'jenkins_jobs.publishers': [
             'git_publisher=modules.git_publisher:git_publisher',
+            'github_status_on_failure=modules.github:failure',
         ],
     }
 )
