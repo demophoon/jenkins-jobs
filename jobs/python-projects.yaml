@@ -8,13 +8,6 @@
     properties:
         - github_project_url:
             projectUrl: '{git_url}'
-    scm:
-        - git:
-            url: '{git_repo}'
-            credentials-id: !include /etc/jenkins_jobs/github-creds.txt
-            basedir: 'code'
-            git-config-name: 'Jenkins (Britt Gresham)'
-            git-config-email: 'jenkins@brittg.com'
 
 - builder:
     name: flake8_test
@@ -41,6 +34,16 @@
     name: '{name}-Flake8-Master'
     display-name: '{name} Flake8 Test (Master)'
     defaults: python_tests
+    scm:
+        - git:
+            url: '{git_repo}'
+            credentials-id: !include /etc/jenkins_jobs/github-creds.txt
+            basedir: 'code'
+            git-config-name: 'Jenkins (Britt Gresham)'
+            git-config-email: 'jenkins@brittg.com'
+            branches:
+                - 'origin/master'
+            local-branch: 'master'
     builders:
         - flake8_test:
 
@@ -48,6 +51,13 @@
     name: '{name}-Flake8-Pull-Request'
     display-name: '{name} Flake8 Test (PR)'
     defaults: python_tests
+    scm:
+        - git:
+            url: '{git_repo}'
+            credentials-id: !include /etc/jenkins_jobs/github-creds.txt
+            basedir: 'code'
+            git-config-name: 'Jenkins (Britt Gresham)'
+            git-config-email: 'jenkins@brittg.com'
     builders:
         - github_pending_status:
         - flake8_test:
@@ -60,9 +70,6 @@
         - '{name}-Flake8-Master':
             triggers:
                 - github
-            scm:
-                - git:
-                    local-branch: 'master'
         - '{name}-Flake8-Pull-Request':
             triggers:
                 - github-pull-request:
