@@ -5,18 +5,16 @@
     description: 'Flake8 Check Python Code'
     display-name: '{name} Flake8 Check'
     concurrent: true
-    quiet-period: 30
+    quiet-period: 5
     triggers:
         - github
         - github-pull-request:
-            white-list:
+            admin-list:
                 - demophoon
+            permit-all: true
     scm:
         - git:
             url: '{git_repo}'
-            branches:
-                - 'origin/master'
-            local-branch: 'master'
             credentials-id: !include github-creds.txt
             git-config-name: 'Jenkins (Britt Gresham)'
             git-config-email: 'jenkins@brittg.com'
@@ -33,12 +31,8 @@
             which python
             which pip
 
-            if [ -e "./setup.py" ]
-            then
-                python setup.py develop
-            fi
             pip install flake8
-            flake8 --ignore=E501 --exclude=flake8/* --max-line-length=140 --max-complexity=15 ./
+            flake8 --ignore=E501,E731,W0621,F812 --exclude=flake8/* --max-line-length=140 ./
     publishers:
         - github_status_on_failure:
 
