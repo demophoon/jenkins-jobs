@@ -1,17 +1,13 @@
-- job-template:
-    name: '{name}-Flake8'
+- defaults:
+    name: python_tests
     project-type: 'freestyle'
-    defaults: 'global'
+    defaults: global
     description: 'Flake8 Check Python Code'
-    display-name: '{name} Flake8 Check'
     concurrent: true
     quiet-period: 5
-    triggers:
-        - github
-        - github-pull-request:
-            admin-list:
-                - demophoon
-            permit-all: true
+    properties:
+        - github_project_url:
+            projectUrl: '{git_url}'
     scm:
         - git:
             url: '{git_repo}'
@@ -19,11 +15,10 @@
             basedir: 'code'
             git-config-name: 'Jenkins (Britt Gresham)'
             git-config-email: 'jenkins@brittg.com'
-    properties:
-        - github_project_url:
-            projectUrl: '{git_url}'
+
+- builder:
+    name: flake8_test
     builders:
-        - github_pending_status:
         - shell: |
             rm -rf ./flake8
             virtualenv flake8
@@ -41,13 +36,39 @@
             else
                 flake8 --ignore=E501,E731,W0621,F812 --max-line-length=140 ./
             fi
+
+- job-template:
+    name: '{name}-Flake8-Master'
+    display-name: '{name} Flake8 Test (Master)'
+    defaults: python_tests
+    builders:
+        - flake8_test:
+
+- job-template:
+    name: '{name}-Flake8-Pull-Request'
+    display-name: '{name} Flake8 Test (PR)'
+    defaults: python_tests
+    builders:
+        - github_pending_status:
+        - flake8_test:
     publishers:
         - github_status_on_failure:
 
 - job-group:
     name: '{name}-tests'
     jobs:
-        - '{name}-Flake8'
+        - '{name}-Flake8-Master':
+            triggers:
+                - github
+            scm:
+                - git:
+                    local-branch: 'master'
+        - '{name}-Flake8-Pull-Request':
+            triggers:
+                - github-pull-request:
+                    admin-list:
+                        - demophoon
+                    permit-all: true
 
 - project:
     name: 'Webvim'
