@@ -51,35 +51,33 @@
 - project:
     name: 'Brittbot'
     git_repo: 'git@github.com:demophoon/brittbot.git'
-    git_url: 'https://github.com/demophoon/webvim'
+    git_url: 'https://github.com/demophoon/brittbot'
     jobs:
         - '{name}-tests'
 
 - project:
     name: 'FOSS-Sams'
     git_repo: 'git@github.com:demophoon/sams.git'
-    git_url: 'https://github.com/demophoon/webvim'
+    git_url: 'https://github.com/demophoon/sams'
     jobs:
         - '{name}-tests'
 
 - project:
     name: 'Cards-of-Lunacy'
     git_repo: 'git@github.com:demophoon/cards-of-lunacy.git'
-    git_url: 'https://github.com/demophoon/webvim'
+    git_url: 'https://github.com/demophoon/cards-of-lunacy'
     jobs:
         - '{name}-tests'
 
 - project:
     name: 'PingdomLib'
     git_repo: 'git@github.com:demophoon/PingdomLib.git'
-    git_url: 'https://github.com/demophoon/webvim'
+    git_url: 'https://github.com/demophoon/PingdomLib'
     disabled: true
-    jobs:
-        - '{name}-tests'
 
 - project:
     name: 'Vundle-Headless-Installer'
     git_repo: 'git@github.com:demophoon/vundle-headless-installer.git'
-    git_url: 'https://github.com/demophoon/webvim'
+    git_url: 'https://github.com/demophoon/vundle-headless-installer'
     jobs:
         - '{name}-tests'
