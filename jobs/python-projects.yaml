@@ -16,6 +16,7 @@
         - git:
             url: '{git_repo}'
             credentials-id: !include /etc/jenkins_jobs/github-creds.txt
+            basedir: 'code'
             git-config-name: 'Jenkins (Britt Gresham)'
             git-config-email: 'jenkins@brittg.com'
     properties:
@@ -32,11 +33,13 @@
             which pip
 
             pip install flake8
+
+            cd ./code
             if [ -e "tox.ini" ]
             then
-                flake8 ./
+                flake8 --config=tox.ini ./
             else
-                flake8 --ignore=E501,E731,W0621,F812 --exclude=flake8/* --max-line-length=140 ./
+                flake8 --ignore=E501,E731,W0621,F812 --max-line-length=140 ./
             fi
     publishers:
         - github_status_on_failure:
