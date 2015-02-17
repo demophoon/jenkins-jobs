@@ -4,7 +4,7 @@
     defaults: 'global'
     description: 'Update Jenkins Jobs with Jenkins!'
     display-name: 'Update Jenkins Jobs'
-    concurrent: true
+    concurrent: false
     quiet-period: 5
     triggers:
         - github
