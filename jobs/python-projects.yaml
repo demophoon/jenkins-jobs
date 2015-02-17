@@ -56,14 +56,14 @@
         - '{name}-tests'
 
 - project:
-    name: 'FOSS Sams'
+    name: 'FOSS-Sams'
     git_repo: 'git@github.com:demophoon/sams.git'
     git_url: 'https://github.com/demophoon/webvim'
     jobs:
         - '{name}-tests'
 
 - project:
-    name: 'Cards of Lunacy'
+    name: 'Cards-of-Lunacy'
     git_repo: 'git@github.com:demophoon/cards-of-lunacy.git'
     git_url: 'https://github.com/demophoon/webvim'
     jobs:
@@ -77,7 +77,7 @@
         - '{name}-tests'
 
 - project:
-    name: 'Vundle Headless Installer'
+    name: 'Vundle-Headless-Installer'
     git_repo: 'git@github.com:demophoon/vundle-headless-installer.git'
     git_url: 'https://github.com/demophoon/webvim'
     jobs:
