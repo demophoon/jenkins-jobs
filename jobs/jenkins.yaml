@@ -1,0 +1,29 @@
+- job:
+    name: 'jenkins-update-jobs'
+    project-type: 'freestyle'
+    defaults: 'global'
+    description: 'Update Jenkins Jobs with Jenkins!'
+    display-name: 'Update Jenkins Jobs'
+    concurrent: true
+    quiet-period: 5
+    triggers:
+        - github
+    scm:
+        - git:
+            url: 'git@github.com:demophoon/jenkins-jobs.git'
+            credentials-id: !include github-creds.txt
+            git-config-name: 'Jenkins (Britt Gresham)'
+            git-config-email: 'jenkins@brittg.com'
+    properties:
+        - github_project_url:
+            projectUrl: 'https://github.com/demophoon/jenkins-jobs'
+    builders:
+        - shell: |
+            rm -rf ./.jenkins
+            virtualenv .jenkins
+            . ./.jenkins/bin/activate
+            python setup.py develop
+            jenkins-jobs update --delete-old ./jobs/
+    publishers:
+        - email:
+            recipients: 'jenkins@brittg.com'
