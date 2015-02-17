@@ -11,7 +11,7 @@
     scm:
         - git:
             url: 'git@github.com:demophoon/jenkins-jobs.git'
-            credentials-id: !include github-creds.txt
+            credentials-id: !include /etc/jenkins_jobs/github-creds.txt
             git-config-name: 'Jenkins (Britt Gresham)'
             git-config-email: 'jenkins@brittg.com'
     properties:

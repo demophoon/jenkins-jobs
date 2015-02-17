@@ -16,7 +16,7 @@
             branches:
                 - 'origin/staging'
             local-branch: 'staging'
-            credentials-id: !include github-creds.txt
+            credentials-id: !include /etc/jenkins_jobs/github-creds.txt
             git-config-name: 'Jenkins ($BUILD_USER)'
             git-config-email: 'jenkins@brittg.com'
     wrappers:
