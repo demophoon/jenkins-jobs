@@ -32,7 +32,12 @@
             which pip
 
             pip install flake8
-            flake8 --ignore=E501,E731,W0621,F812 --exclude=flake8/* --max-line-length=140 ./
+            if [ -e "tox.ini" ]
+            then
+                flake8 ./
+            else
+                flake8 --ignore=E501,E731,W0621,F812 --exclude=flake8/* --max-line-length=140 ./
+            fi
     publishers:
         - github_status_on_failure:
 
