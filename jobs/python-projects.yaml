@@ -44,6 +44,9 @@
             branches:
                 - 'origin/master'
             local-branch: 'master'
+    triggers:
+        - timed: '@midnight'
+        - github
     builders:
         - flake8_test:
 
@@ -58,6 +61,11 @@
             basedir: 'code'
             git-config-name: 'Jenkins (Britt Gresham)'
             git-config-email: 'jenkins@brittg.com'
+    triggers:
+        - github-pull-request:
+            admin-list:
+                - demophoon
+            permit-all: true
     builders:
         - github_pending_status:
         - flake8_test:
@@ -68,14 +76,7 @@
     name: '{name}-tests'
     jobs:
         - '{name}-Flake8-Master':
-            triggers:
-                - github
         - '{name}-Flake8-Pull-Request':
-            triggers:
-                - github-pull-request:
-                    admin-list:
-                        - demophoon
-                    permit-all: true
 
 - project:
     name: 'Webvim'
