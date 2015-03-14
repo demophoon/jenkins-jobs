@@ -8,11 +8,11 @@
     quiet-period: 30
     builders:
         - vagrant_up:
-            vagrantFile: /tmp/jenkins/vagrant/Vagrantfile
+            vagrantFile: /var/lib/jenkins/vagrantfiles/ubuntu/Vagrantfile
         - vagrant_command:
-            vagrantFile: /tmp/jenkins/vagrant/Vagrantfile
+            vagrantFile: /var/lib/jenkins/vagrantfiles/ubuntu/Vagrantfile
             command: |
                 facter
                 echo "This is running in a vagrant vm"
         - vagrant_destroy:
-            vagrantFile: /tmp/jenkins/vagrant/Vagrantfile
+            vagrantFile: /var/lib/jenkins/vagrantfiles/ubuntu/Vagrantfile
