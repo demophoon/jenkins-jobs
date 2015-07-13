@@ -9,10 +9,9 @@
             #!/bin/bash
             base_backup_dir='/media/tb-tb/Backups'
             host='linode.brittg.com'
-            paths=(/var/www/ /opt/shrls)
+            paths=(/var/www/ /opt/shrls/ /home/britt/)
 
-            for path in $paths
-            do
+            for path in ${paths[@]}; do
                 /bin/mkdir -p ${base_backup_dir}/${host}${path}
                 /usr/bin/rsync -avz -e ssh root@${host}:${path} ${base_backup_dir}/${host}${path}
             done
