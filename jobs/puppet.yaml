@@ -1,9 +1,9 @@
-- job:
-    name: 'puppet-environment-test'
+- job-template:
+    name: 'puppet-environment-test-{parser}-parser'
     project-type: 'freestyle'
     defaults: 'global'
     description: 'Test changes to puppet-environment in a vagrant file'
-    display-name: 'Test puppet-environment'
+    display-name: 'Test puppet-environment {parser} parser'
     concurrent: false
     quiet-period: 30
     triggers:
@@ -29,3 +29,15 @@
             command: !include-raw test_puppet.sh
         - vagrant_destroy:
             vagrantFile: /var/lib/jenkins/vagrantfiles/ubuntu/Vagrantfile
+
+- project:
+    name: 'Future parser tests'
+    parser: 'future'
+    jobs:
+        - 'puppet-environment-test-{parser}-parser'
+
+- project:
+    name: 'Current parser tests'
+    parser: 'current'
+    jobs:
+        - 'puppet-environment-test-{parser}-parser'

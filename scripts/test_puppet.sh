@@ -20,10 +20,10 @@ sudo r10k deploy environment -pv
 sudo diff -r --exclude=".git" /etc/puppet/environments/production /etc/puppet/environments/development
 
 # Save head puppet apply
-sudo puppet apply --modulepath /etc/puppet/environments/development/modules /etc/puppet/environments/development/site.pp --noop > ~/current.log
+sudo puppet apply --parser={parser} --modulepath /etc/puppet/environments/development/modules /etc/puppet/environments/development/site.pp --noop > ~/current.log
 
 # Save head puppet apply
-sudo puppet apply --modulepath /etc/puppet/environments/production/modules /etc/puppet/environments/production/site.pp --noop > ~/previous.log
+sudo puppet apply --parser={parser} --modulepath /etc/puppet/environments/production/modules /etc/puppet/environments/production/site.pp --noop > ~/previous.log
 
 # Save and echo diff
 sudo diff ~/current.log ~/previous.log > ~/diff.log
