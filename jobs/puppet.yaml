@@ -6,48 +6,26 @@
     display-name: 'Test puppet-environment'
     concurrent: false
     quiet-period: 30
+    triggers:
+        - github
+    properties:
+        - github_project_url:
+            projectUrl: 'https://github.com/demophoon/puppet-environment'
+    scm:
+        - git:
+            url: 'git@github.com:demophoon/puppet-environment.git'
+            branches:
+                - 'origin/production'
+            local-branch: 'production'
+            credentials-id: !include /etc/jenkins_jobs/github-creds.txt
+            git-config-name: 'Jenkins ($BUILD_USER)'
+            git-config-email: 'jenkins@brittg.com'
     builders:
         - vagrant_up:
             vagrantFile: /var/lib/jenkins/vagrantfiles/ubuntu/Vagrantfile
             destroyOnError: true
         - vagrant_command:
             vagrantFile: /var/lib/jenkins/vagrantfiles/ubuntu/Vagrantfile
-            command: |
-                #!/bin/bash
-
-                # Install Puppet and r10k
-                sudo apt-get install puppet -y
-                sudo gem install r10k
-
-                # Lay down r10k.yaml config
-                sudo bash -c "cat >/etc/r10k.yaml" <<EOF
-                :cachedir: '/var/cache/r10k'
-                :sources:
-                  :default:
-                    remote: 'https://github.com/demophoon/puppet-environment.git'
-                    basedir: '/etc/puppet/environments'
-                EOF
-
-                # Deploy r10k environments
-                sudo r10k deploy environment -pv
-
-                # Move to profiles directory
-                cd /etc/puppet/environments/production/modules/profiles/
-
-                # Show diff of last commit and now
-                sudo git diff HEAD^ HEAD
-
-                # Save head puppet apply
-                sudo puppet apply --modulepath /etc/puppet/environments/production/modules /etc/puppet/environments/production/site.pp --noop > ~/current.log
-
-                # Checkout Previous commit
-                sudo git checkout HEAD^
-
-                # Save head puppet apply
-                sudo puppet apply --modulepath /etc/puppet/environments/production/modules /etc/puppet/environments/production/site.pp --noop > ~/previous.log
-
-                # Save and echo diff
-                sudo diff -y ~/current.log ~/previous.log > ~/diff.log
-                sudo cat ~/diff.log
+            command: !include-raw test_puppet.sh
         - vagrant_destroy:
             vagrantFile: /var/lib/jenkins/vagrantfiles/ubuntu/Vagrantfile
