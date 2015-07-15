@@ -22,22 +22,23 @@
             git-config-email: 'jenkins@brittg.com'
     builders:
         - vagrant_up:
-            vagrantFile: /var/lib/jenkins/vagrantfiles/ubuntu/Vagrantfile
+            vagrantFile: /var/lib/jenkins/vagrantfiles/ubuntu/{parser}-parser/Vagrantfile
             destroyOnError: true
         - vagrant_command:
-            vagrantFile: /var/lib/jenkins/vagrantfiles/ubuntu/Vagrantfile
+            vagrantFile: /var/lib/jenkins/vagrantfiles/ubuntu/{parser}-parser/Vagrantfile
             command: !include-raw test_puppet.sh
         - vagrant_destroy:
-            vagrantFile: /var/lib/jenkins/vagrantfiles/ubuntu/Vagrantfile
+            vagrantFile: /var/lib/jenkins/vagrantfiles/ubuntu/{parser}-parser/Vagrantfile
+
+- job-group:
+    name: 'puppet-environment-smoke-tests'
+    jobs:
+        - 'puppet-environment-test-{parser}-parser':
+            parser: current
+        - 'puppet-environment-test-{parser}-parser':
+            parser: future
 
 - project:
-    name: 'Future parser tests'
-    parser: 'future'
+    name: 'Puppet manifest smoke tests'
     jobs:
-        - 'puppet-environment-test-{parser}-parser'
-
-- project:
-    name: 'Current parser tests'
-    parser: 'current'
-    jobs:
-        - 'puppet-environment-test-{parser}-parser'
+        - 'puppet-environment-smoke-tests'
