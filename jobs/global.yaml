@@ -7,3 +7,14 @@
         numToKeep: 30
         artifactDaysToKeep: -1
         artifactNumToKeep: 30
+    publishers:
+        - ircbot:
+            strategy: all
+            notify-committers: false
+            notify-culprits: false
+            notify-upstream: false
+            notify-fixers: false
+            message-type: summary-scm
+            channels:
+                - name: '##brittslittlesliceofheaven'
+                  notify-only: true

@@ -25,15 +25,5 @@
             python setup.py develop
             jenkins-jobs update --delete-old ./jobs/
     publishers:
-        - ircbot:
-            strategy: all
-            notify-committers: false
-            notify-culprits: false
-            notify-upstream: false
-            notify-fixers: false
-            message-type: summary-scm
-            channels:
-                - name: '##brittslittlesliceofheaven'
-                  notify-only: true
         - email:
             recipients: 'jenkins@brittg.com'
