@@ -24,6 +24,3 @@
             . ./.jenkins/bin/activate
             python setup.py develop
             jenkins-jobs update --delete-old ./jobs/
-    publishers:
-        - email:
-            recipients: 'jenkins@brittg.com'

@@ -43,12 +43,12 @@
             remote: 'origin'
         - ircbot:
             strategy: all
-            notify-start: false
+            notify-start: true
             notify-committers: false
             notify-culprits: false
             notify-upstream: false
             notify-fixers: false
-            message-type: 'summary'
+            message-type: summary
             channels:
                 - name: '##brittslittlesliceofheaven'
-                  notify-only: false
+                  notify-only: true
