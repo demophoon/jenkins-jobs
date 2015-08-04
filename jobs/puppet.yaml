@@ -34,8 +34,6 @@
     name: 'puppet-environment-smoke-tests'
     jobs:
         - 'puppet-environment-test-{parser}-parser':
-            parser: current
-        - 'puppet-environment-test-{parser}-parser':
             parser: future
 
 - project:
