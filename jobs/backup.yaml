@@ -13,5 +13,5 @@
 
             for path in ${paths[@]}; do
                 /bin/mkdir -p ${base_backup_dir}/${host}${path}
-                /usr/bin/rsync -avz -e ssh britt@${host}:${path} ${base_backup_dir}/${host}${path}
+                /usr/bin/rsync -avz -e ssh britt@${host}:${path} ${base_backup_dir}/${host}${path} > ${base_backup_dir}/${host}/$(date "+%F%T%Z").log 2>&1
             done
