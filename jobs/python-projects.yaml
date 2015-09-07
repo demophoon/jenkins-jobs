@@ -126,6 +126,14 @@
         - '{name}-tests'
 
 - project:
+    name: 'shrls'
+    git_repo: 'git@github.com:demophoon/shrls.git'
+    git_url: 'https://github.com/demophoon/shrls'
+    code_dir: ''
+    jobs:
+        - '{name}-tests'
+
+- project:
     name: 'PingdomLib'
     git_repo: 'git@github.com:demophoon/PingdomLib.git'
     git_url: 'https://github.com/demophoon/PingdomLib'
