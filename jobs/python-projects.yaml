@@ -8,6 +8,15 @@
     properties:
         - github_project_url:
             projectUrl: '{git_url}'
+    publishers:
+        - ircbot:
+            strategy: all
+            notify-start: true
+            notify-committers: false
+            notify-culprits: false
+            notify-upstream: false
+            notify-fixers: false
+            message-type: summary-scm-fail
 
 - builder:
     name: flake8_test
