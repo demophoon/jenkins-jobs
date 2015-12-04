@@ -6,6 +6,7 @@
     display-name: 'Test puppet-environment {parser} parser'
     concurrent: false
     quiet-period: 30
+    disabled: true
     triggers:
         - github
     properties:
